@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Семейный Арбитр | Fair Wheel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-balance-scale"></i>
+                <h1>Семейный Арбитр</h1>
+            </div>
+            <div class="family-name" id="familyNameDisplay">Семья Ивановых</div>
+        </header>
+
+        <!-- Основные вкладки -->
+        <div class="tabs">
+            <button class="tab active" data-tab="tasks"><i class="fas fa-tasks"></i> Задачи</button>
+            <button class="tab" data-tab="lottery"><i class="fas fa-random"></i> Жребий</button>
+            <button class="tab" data-tab="rewards"><i class="fas fa-gift"></i> Награды</button>
+            <button class="tab" data-tab="stats"><i class="fas fa-chart-bar"></i> Статистика</button>
+            <button class="tab" data-tab="admin"><i class="fas fa-cog"></i> Управление</button>
+        </div>
+
+        <!-- Контент вкладок -->
+        <div class="tab-content">
+            <!-- Вкладка 1: Мои задачи -->
+            <div id="tasks" class="tab-pane active">
+                <h2><i class="fas fa-clipboard-list"></i> Мои задачи на сегодня</h2>
+                <div class="user-selector">
+                    <label for="userSelect">Выберите пользователя:</label>
+                    <select id="userSelect" class="user-dropdown">
+                        <!-- Заполнится из JS -->
+                    </select>
+                </div>
+                <div id="userTasks" class="tasks-list">
+                    <!-- Список задач пользователя -->
+                </div>
+                <div class="points-display">
+                    <div class="points-card">
+                        <h3>Ваши баллы</h3>
+                        <div class="points-amount" id="userPoints">0</div>
+                        <div class="points-label">семейных баллов</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка 2: Жребий -->
+            <div id="lottery" class="tab-pane">
+                <h2><i class="fas fa-dice"></i> Случайное распределение задач</h2>
+                <div class="lottery-controls">
+                    <button id="drawSingle" class="btn-primary"><i class="fas fa-user"></i> Распределить для одного</button>
+                    <button id="drawAll" class="btn-primary"><i class="fas fa-users"></i> Распределить для всех</button>
+                    <button id="clearDraw" class="btn-secondary"><i class="fas fa-trash"></i> Очистить распределение</button>
+                </div>
+                
+                <div class="wheel-container">
+                    <div class="wheel" id="wheel">
+                        <div class="wheel-inner">
+                            <div class="wheel-text">Крути удачу!</div>
+                        </div>
+                    </div>
+                    <button id="spinWheel" class="btn-spin"><i class="fas fa-redo"></i> Крутить колесо</button>
+                </div>
+                
+                <div class="draw-results">
+                    <h3>Результаты распределения</h3>
+                    <div id="drawResults">
+                        <!-- Результаты жеребьёвки -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка 3: Награды -->
+            <div id="rewards" class="tab-pane">
+                <h2><i class="fas fa-star"></i> Каталог наград</h2>
+                <div class="rewards-container">
+                    <div class="rewards-list" id="rewardsList">
+                        <!-- Список наград -->
+                    </div>
+                    <div class="purchase-history">
+                        <h3>История покупок</h3>
+                        <div id="purchaseHistory">
+                            <!-- История покупок -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка 4: Статистика -->
+            <div id="stats" class="tab-pane">
+                <h2><i class="fas fa-chart-pie"></i> Статистика семьи</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Общие баллы семьи</h3>
+                        <div class="stat-number" id="totalFamilyPoints">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Выполнено задач за неделю</h3>
+                        <div class="stat-number" id="weeklyCompleted">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Самая популярная награда</h3>
+                        <div class="stat-text" id="popularReward">Недостаточно данных</div>
+                    </div>
+                </div>
+                <div class="leaderboard">
+                    <h3>Семейный рейтинг</h3>
+                    <table id="leaderboardTable">
+                        <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Баллы</th>
+                                <th>Выполнено задач</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Заполнится из JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Вкладка 5: Управление -->
+            <div id="admin" class="tab-pane">
+                <h2><i class="fas fa-user-cog"></i> Управление семьёй</h2>
+                
+                <div class="admin-sections">
+                    <!-- Управление пользователями -->
+                    <div class="admin-section">
+                        <h3><i class="fas fa-users"></i> Члены семьи</h3>
+                        <div class="user-management">
+                            <div class="input-group">
+                                <input type="text" id="newUserName" placeholder="Имя члена семьи" maxlength="20">
+                                <select id="newUserRole">
+                                    <option value="child">Ребёнок (4-7 лет)</option>
+                                    <option value="teen">Подросток (8-14 лет)</option>
+                                    <option value="adult" selected>Взрослый</option>
+                                </select>
+                                <button id="addUser" class="btn-primary">Добавить</button>
+                            </div>
+                            <div id="usersList" class="list-container">
+                                <!-- Список пользователей -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Управление задачами -->
+                    <div class="admin-section">
+                        <h3><i class="fas fa-tasks"></i> Список задач</h3>
+                        <div class="task-management">
+                            <div class="input-group">
+                                <input type="text" id="newTaskName" placeholder="Название задачи" maxlength="50">
+                                <select id="newTaskDifficulty">
+                                    <option value="1">★ Легкая (10 баллов)</option>
+                                    <option value="2">★★ Простая (20 баллов)</option>
+                                    <option value="3" selected>★★★ Средняя (30 баллов)</option>
+                                    <option value="4">★★★★ Сложная (40 баллов)</option>
+                                    <option value="5">★★★★★ Очень сложная (50 баллов)</option>
+                                </select>
+                                <button id="addTask" class="btn-primary">Добавить</button>
+                            </div>
+                            <div id="tasksList" class="list-container">
+                                <!-- Список задач -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Управление наградами -->
+                    <div class="admin-section">
+                        <h3><i class="fas fa-gifts"></i> Награды</h3>
+                        <div class="reward-management">
+                            <div class="input-group">
+                                <input type="text" id="newRewardName" placeholder="Название награды" maxlength="50">
+                                <input type="number" id="newRewardCost" placeholder="Стоимость" min="10" max="5000" value="100">
+                                <button id="addReward" class="btn-primary">Добавить</button>
+                            </div>
+                            <div id="rewardsAdminList" class="list-container">
+                                <!-- Список наград для админа -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-controls">
+                    <button id="resetData" class="btn-danger"><i class="fas fa-trash-alt"></i> Сбросить все данные</button>
+                    <button id="exportData" class="btn-secondary"><i class="fas fa-download"></i> Экспорт данных</button>
+                    <button id="importData" class="btn-secondary"><i class="fas fa-upload"></i> Импорт данных</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Уведомления -->
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
